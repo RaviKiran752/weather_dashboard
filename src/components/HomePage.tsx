@@ -24,8 +24,8 @@ const HomePage = () => {
         animate="visible"
         variants={fadeIn}
       >
-        <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-3">
-          Welcome to Weather Dashboard
+        <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-6">
+          Welcome to Weather Forecast Dashboard
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
           Get real-time weather information, forecasts, and helpful tips for any location worldwide

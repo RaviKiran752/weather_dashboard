@@ -10,11 +10,12 @@ const AboutPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-3">
-          About Weather Dashboard
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+          About Weather Forecast Dashboard
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
-          Learn about our weather application and its features
+        <p className="text-gray-600 dark:text-gray-300 mb-6">
+          Weather Forecast Dashboard provides accurate, timely, and easy-to-understand weather information.
+          Our goal is to help users plan their days effectively with reliable weather forecasts.
         </p>
       </motion.div>
 
@@ -28,7 +29,7 @@ const AboutPage = () => {
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Our Mission</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Weather Dashboard provides accurate, timely, and easy-to-understand weather information. 
+              Weather Forecast Dashboard provides accurate, timely, and easy-to-understand weather information. 
               We help users make informed decisions about daily activities, travel plans, and more.
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -93,9 +94,10 @@ const AboutPage = () => {
       >
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Our Data Sources</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
-            Weather Dashboard utilizes data from reputable meteorological services for accuracy 
-            and reliability:
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">Data Sources</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Weather Forecast Dashboard utilizes data from reputable meteorological services for accuracy
+            and reliability. We update our data regularly to ensure you get the most current information.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
