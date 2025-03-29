@@ -1,6 +1,12 @@
 import axios from 'axios';
 
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+// Debug environment variables
+console.log('Environment variables available:', import.meta.env ? 'Yes' : 'No');
+console.log('API Key from env (length):', import.meta.env.VITE_WEATHER_API_KEY ? import.meta.env.VITE_WEATHER_API_KEY.length : 0);
+console.log('API Key first/last char:', import.meta.env.VITE_WEATHER_API_KEY ? 
+  `${import.meta.env.VITE_WEATHER_API_KEY.charAt(0)}...${import.meta.env.VITE_WEATHER_API_KEY.charAt(import.meta.env.VITE_WEATHER_API_KEY.length - 1)}` : 'N/A');
+
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY || 'da1965b1e7024f5aaa5124434252903';
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
 export interface WeatherData {
