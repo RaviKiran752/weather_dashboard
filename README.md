@@ -1,6 +1,6 @@
-# Weather Forecast Dashboard App
+# Weather Dashboard App
 
-A modern, responsive weather forecast application built with React that allows users to search for real-time weather information for any city using the WeatherAPI.
+A modern, responsive weather application built with React that allows users to search for real-time weather information for any city using the WeatherAPI.
 
 ## Features
 
