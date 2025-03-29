@@ -1,0 +1,64 @@
+import React from 'react';
+import { AnimatePresence } from 'framer-motion';
+import SearchBar from './components/SearchBar';
+import WeatherCard from './components/WeatherCard';
+import ForecastCard from './components/ForecastCard';
+import SearchHistory from './components/SearchHistory';
+import ErrorDisplay from './components/ErrorDisplay';
+import LoadingSpinner from './components/LoadingSpinner';
+import ThemeToggle from './components/ThemeToggle';
+import WelcomeScreen from './components/WelcomeScreen';
+import { useWeather } from './hooks/useWeather';
+
+function App() {
+  const { 
+    weatherData, 
+    forecastData, 
+    isLoading, 
+    error, 
+    searchHistory, 
+    getWeather, 
+    refreshWeather 
+  } = useWeather();
+
+  return (
+    <div className="min-h-screen w-full bg-gradient-to-b from-blue-100 to-blue-200 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 py-8 px-4">
+      <div className="container mx-auto max-w-4xl">
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
+            Weather Dashboard
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            Search for a city to get the latest weather information
+          </p>
+        </header>
+
+        <div className="max-w-md mx-auto">
+          <SearchBar onSearch={getWeather} isLoading={isLoading} />
+          <SearchHistory history={searchHistory} onSelectCity={getWeather} />
+        </div>
+
+        <AnimatePresence mode="wait">
+          {error && <ErrorDisplay message={error} />}
+          
+          {isLoading && <LoadingSpinner />}
+          
+          {!isLoading && weatherData && (
+            <div className="flex flex-col md:flex-row md:gap-8 md:justify-center md:items-start">
+              <WeatherCard data={weatherData} onRefresh={refreshWeather} />
+              {forecastData && <ForecastCard data={forecastData} />}
+            </div>
+          )}
+
+          {!isLoading && !weatherData && !error && (
+            <WelcomeScreen />
+          )}
+        </AnimatePresence>
+        
+        <ThemeToggle />
+      </div>
+    </div>
+  );
+}
+
+export default App;

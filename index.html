@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+    <meta name="description" content="A modern weather dashboard app built with React" />
+    <script>
+      // Theme initialization
+      const darkMode = localStorage.getItem('theme') === 'dark' || 
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (darkMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      // For debugging
+      console.log('Theme init:', darkMode ? 'dark' : 'light');
+      console.log('localStorage theme:', localStorage.getItem('theme'));
+
+      // Create a global function to toggle theme (for debugging purposes)
+      window.toggleTheme = function() {
+        const html = document.documentElement;
+        const hasDarkClass = html.classList.contains('dark');
+        
+        console.log('Global toggleTheme called. Current dark mode:', hasDarkClass);
+        
+        if (hasDarkClass) {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          console.log('Theme switched to light mode');
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          console.log('Theme switched to dark mode');
+        }
+        
+        return html.classList.contains('dark'); // Return new state
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
