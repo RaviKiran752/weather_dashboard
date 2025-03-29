@@ -5,12 +5,36 @@ import SearchBar from './SearchBar';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorDisplay from './ErrorDisplay';
 
+// Define type for chart data item
+interface ChartDataItem {
+  month: string;
+  value: number;
+  avg: number;
+}
+
+// Define type for historical data
+interface HistoricalData {
+  temperature: ChartDataItem[];
+  precipitation: ChartDataItem[];
+  wind: ChartDataItem[];
+}
+
+// Define type for chart units and titles
+interface ChartLabels {
+  temperature: string;
+  precipitation: string;
+  wind: string;
+}
+
+// Define type for the chart type
+type ChartType = 'temperature' | 'precipitation' | 'wind';
+
 const DataAnalysisPage = () => {
   const { getWeather, isLoading, error, weatherData, forecastData } = useWeather();
-  const [chartType, setChartType] = useState('temperature'); // temperature, precipitation, wind
+  const [chartType, setChartType] = useState<ChartType>('temperature'); // temperature, precipitation, wind
 
   // Mock data for historical analysis
-  const historicalData = {
+  const historicalData: HistoricalData = {
     temperature: [
       { month: 'Jan', value: 5, avg: 4 },
       { month: 'Feb', value: 7, avg: 6 },
@@ -56,16 +80,16 @@ const DataAnalysisPage = () => {
   };
 
   // Find highest value for current chart type to use for scaling
-  const maxValue = Math.max(...historicalData[chartType].map(item => item.value));
+  const maxValue = Math.max(...historicalData[chartType].map((item: ChartDataItem) => item.value));
 
   // Chart units and labels
-  const chartUnits = {
+  const chartUnits: ChartLabels = {
     temperature: '°C',
     precipitation: 'mm',
     wind: 'km/h',
   };
 
-  const chartTitles = {
+  const chartTitles: ChartLabels = {
     temperature: 'Monthly Temperature Trends',
     precipitation: 'Monthly Precipitation Trends',
     wind: 'Monthly Wind Speed Trends',
@@ -175,7 +199,7 @@ const DataAnalysisPage = () => {
 
           {/* Chart bars */}
           <div className="absolute left-12 right-4 top-0 bottom-0 flex items-end">
-            {historicalData[chartType].map((item, index) => (
+            {historicalData[chartType].map((item: ChartDataItem, index: number) => (
               <div key={item.month} className="flex-1 flex flex-col items-center justify-end h-full">
                 {/* Current year bar */}
                 <div 
