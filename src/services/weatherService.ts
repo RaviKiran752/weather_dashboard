@@ -50,20 +50,44 @@ export interface ForecastData {
 
 export const fetchWeather = async (city: string): Promise<WeatherData> => {
   try {
+    console.log(`Fetching weather for: ${city} with API key: ${API_KEY}`);
     const response = await axios.get(`${BASE_URL}/current.json`, {
       params: {
         key: API_KEY,
         q: city,
       },
     });
+    console.log('Weather API response:', response.status);
     return response.data;
   } catch (error) {
-    throw new Error('Failed to fetch weather data');
+    console.error('Weather API error:', error);
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('API Error Response:', error.response.data);
+        if (error.response.status === 400 || error.response.status === 404) {
+          throw new Error(`City not found: ${city}. Please check the spelling and try again.`);
+        } else if (error.response.status === 401 || error.response.status === 403) {
+          throw new Error('API key error. Please check your API key.');
+        } else {
+          throw new Error(`API Error (${error.response.status}): ${error.response.data.error?.message || 'Unknown error'}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        throw new Error('No response from weather service. Please check your internet connection.');
+      } else {
+        // Something happened in setting up the request
+        throw new Error(`Request error: ${error.message}`);
+      }
+    }
+    throw new Error('Failed to fetch weather data: Unknown error');
   }
 };
 
 export const fetchForecast = async (city: string): Promise<ForecastData> => {
   try {
+    console.log(`Fetching forecast for: ${city} with API key: ${API_KEY}`);
     const response = await axios.get(`${BASE_URL}/forecast.json`, {
       params: {
         key: API_KEY,
@@ -71,8 +95,30 @@ export const fetchForecast = async (city: string): Promise<ForecastData> => {
         days: 5,
       },
     });
+    console.log('Forecast API response:', response.status);
     return response.data;
   } catch (error) {
-    throw new Error('Failed to fetch forecast data');
+    console.error('Forecast API error:', error);
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('API Error Response:', error.response.data);
+        if (error.response.status === 400 || error.response.status === 404) {
+          throw new Error(`City not found: ${city}. Please check the spelling and try again.`);
+        } else if (error.response.status === 401 || error.response.status === 403) {
+          throw new Error('API key error. Please check your API key.');
+        } else {
+          throw new Error(`API Error (${error.response.status}): ${error.response.data.error?.message || 'Unknown error'}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        throw new Error('No response from weather service. Please check your internet connection.');
+      } else {
+        // Something happened in setting up the request
+        throw new Error(`Request error: ${error.message}`);
+      }
+    }
+    throw new Error('Failed to fetch forecast data: Unknown error');
   }
 }; 

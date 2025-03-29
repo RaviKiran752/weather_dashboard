@@ -31,9 +31,20 @@ export const useWeather = () => {
   }, [searchHistory]);
 
   const getWeather = async (city: string) => {
+    if (!city.trim()) {
+      setState(prev => ({ 
+        ...prev, 
+        error: 'Please enter a city name', 
+        isLoading: false 
+      }));
+      return;
+    }
+    
     setState(prev => ({ ...prev, isLoading: true, error: null }));
     
     try {
+      console.log(`Getting weather data for: ${city}`);
+      
       const [weather, forecast] = await Promise.all([
         fetchWeather(city),
         fetchForecast(city)
@@ -53,10 +64,11 @@ export const useWeather = () => {
         return [newSearch, ...filtered].slice(0, 5);
       });
     } catch (error) {
+      console.error('useWeather hook error:', error);
       setState(prev => ({
         ...prev,
         isLoading: false,
-        error: 'Failed to fetch weather data. Please check the city name and try again.',
+        error: error instanceof Error ? error.message : 'Failed to fetch weather data. Please try again.',
       }));
     }
   };
