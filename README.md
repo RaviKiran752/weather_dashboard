@@ -11,6 +11,8 @@ A modern, responsive weather application built with React that allows users to s
 - Dark/Light theme toggle
 - Mobile and desktop responsive design
 - Loading and error states
+- Detailed weather analysis and insights
+- Vercel Analytics integration
 
 ## Tech Stack
 
@@ -20,6 +22,7 @@ A modern, responsive weather application built with React that allows users to s
 - Framer Motion for animations
 - Axios for API requests
 - WeatherAPI for weather data
+- Vercel Analytics for user insights
 
 ## Running Locally
 
@@ -43,6 +46,12 @@ A modern, responsive weather application built with React that allows users to s
 
 The app can be deployed to any of the following platforms:
 
+### Environment Variables
+
+When deploying, make sure to configure the following environment variables in your hosting platform:
+
+- `VITE_WEATHER_API_KEY`: Your Weather API key (required for weather data fetching)
+
 ### Vercel
 
 1. Create a Vercel account at [vercel.com](https://vercel.com)
@@ -54,6 +63,7 @@ The app can be deployed to any of the following platforms:
    ```
    vercel
    ```
+4. Configure environment variables in the Vercel dashboard under Project Settings > Environment Variables
 
 ### Netlify
 
