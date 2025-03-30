@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useWeather } from '../hooks/useWeather';
 import SearchBar from './SearchBar';
@@ -9,6 +9,28 @@ import ErrorDisplay from './ErrorDisplay';
 const ForecastPage = () => {
   const { getWeather, isLoading, error, weatherData, forecastData } = useWeather();
   const [forecastView, setForecastView] = useState('daily'); // 'daily' or 'hourly'
+  const [hasForecastData, setHasForecastData] = useState(false);
+
+  // Check if we have valid forecast data
+  useEffect(() => {
+    console.log('ForecastPage - checking forecast data:', 
+      forecastData ? 
+      `Available with ${forecastData.forecast?.forecastday?.length || 0} days` : 
+      'Not available');
+    
+    setHasForecastData(
+      !!forecastData && 
+      !!forecastData.forecast && 
+      Array.isArray(forecastData.forecast.forecastday) && 
+      forecastData.forecast.forecastday.length > 0
+    );
+  }, [forecastData]);
+
+  // For debugging search functionality
+  const handleSearch = (city: string) => {
+    console.log('ForecastPage - searching for city:', city);
+    getWeather(city);
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -32,7 +54,7 @@ const ForecastPage = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        <SearchBar onSearch={getWeather} isLoading={isLoading} />
+        <SearchBar onSearch={handleSearch} isLoading={isLoading} />
       </motion.div>
 
       {error && <ErrorDisplay message={error} />}
@@ -43,7 +65,7 @@ const ForecastPage = () => {
         </div>
       )}
 
-      {!isLoading && !error && weatherData && forecastData && (
+      {!isLoading && !error && weatherData && hasForecastData && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -220,7 +242,7 @@ const ForecastPage = () => {
         </motion.div>
       )}
 
-      {!isLoading && !error && !weatherData && (
+      {!isLoading && !error && (!forecastData || !hasForecastData) && (
         <motion.div 
           className="text-center py-20 bg-gray-50 dark:bg-gray-800 rounded-lg"
           initial={{ opacity: 0 }}
