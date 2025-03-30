@@ -1,14 +1,14 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
+import { AppContext } from '../context/AppContext';
 
 interface LayoutProps {
   children: ReactNode;
-  currentPage: string;
-  setCurrentPage: (page: string) => void;
 }
 
-const Layout = ({ children, currentPage, setCurrentPage }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
+  const { currentPage, setCurrentPage } = useContext(AppContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/Layout';
 import HomePage from './components/HomePage';
 import ForecastPage from './components/ForecastPage';
 import DataAnalysisPage from './components/DataAnalysisPage';
 import AboutPage from './components/AboutPage';
+import { AppContext, AppProvider } from './context/AppContext';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+function AppContent() {
+  const { currentPage, setCurrentPage } = useContext(AppContext);
 
   // Function to render the current page based on state
   const renderPage = () => {
@@ -33,6 +34,14 @@ function App() {
         </AnimatePresence>
       </Layout>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
   );
 }
 

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { fetchWeather, fetchForecast, WeatherData, ForecastData } from '../services/weatherService';
+import { AppContext } from '../context/AppContext';
 
 interface WeatherState {
   weatherData: WeatherData | null;
@@ -14,6 +15,7 @@ interface SearchHistory {
 }
 
 export const useWeather = () => {
+  const { setCurrentPage } = useContext(AppContext);
   const [state, setState] = useState<WeatherState>({
     weatherData: null,
     forecastData: null,
@@ -63,6 +65,10 @@ export const useWeather = () => {
         const filtered = prev.filter(item => item.city.toLowerCase() !== city.toLowerCase());
         return [newSearch, ...filtered].slice(0, 5);
       });
+
+      // Navigate to the forecast page after a successful search
+      setCurrentPage('forecast');
+      
     } catch (error) {
       console.error('useWeather hook error:', error);
       setState(prev => ({

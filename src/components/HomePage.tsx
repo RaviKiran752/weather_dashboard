@@ -181,7 +181,7 @@ const HomePage = () => {
           {['London', 'Tokyo', 'New York', 'Sydney', 'Paris', 'Dubai', 'Cairo', 'Rio de Janeiro'].map((city) => (
             <button
               key={city}
-              onClick={() => getWeather(city)}
+              onClick={() => handleSearch(city)}
               className="p-3 bg-white dark:bg-gray-800 rounded-md shadow-sm hover:shadow-md transition-shadow text-center"
             >
               <span className="text-gray-800 dark:text-white font-medium">{city}</span>
