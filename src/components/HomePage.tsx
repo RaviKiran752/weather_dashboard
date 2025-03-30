@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SearchBar from './SearchBar';
 import SearchHistory from './SearchHistory';
@@ -6,6 +6,14 @@ import { useWeather } from '../hooks/useWeather';
 
 const HomePage = () => {
   const { getWeather, isLoading, searchHistory } = useWeather();
+  
+  // Add debug logging
+  useEffect(() => {
+    console.log('HomePage mounted');
+    console.log('getWeather function available:', !!getWeather);
+    console.log('isLoading state:', isLoading);
+    console.log('searchHistory available:', !!searchHistory);
+  }, []);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -14,6 +22,18 @@ const HomePage = () => {
       y: 0,
       transition: { duration: 0.6 }
     }
+  };
+
+  // Create a wrapped function for debugging
+  const handleSearch = (city: string) => {
+    console.log('HomePage: handleSearch called with city:', city);
+    getWeather(city);
+  };
+
+  // Create a wrapped function for history selection debugging
+  const handleHistorySelect = (city: string) => {
+    console.log('HomePage: handleHistorySelect called with city:', city);
+    getWeather(city);
   };
 
   return (
@@ -38,8 +58,8 @@ const HomePage = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        <SearchBar onSearch={getWeather} isLoading={isLoading} />
-        <SearchHistory history={searchHistory} onSelectCity={getWeather} />
+        <SearchBar onSearch={handleSearch} isLoading={isLoading} />
+        <SearchHistory history={searchHistory} onSelectCity={handleHistorySelect} />
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">

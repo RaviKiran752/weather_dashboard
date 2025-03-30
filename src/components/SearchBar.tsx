@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface SearchBarProps {
@@ -9,10 +9,21 @@ interface SearchBarProps {
 const SearchBar = ({ onSearch, isLoading }: SearchBarProps) => {
   const [city, setCity] = useState('');
 
+  // Add debug logging
+  useEffect(() => {
+    console.log('SearchBar initialized');
+    console.log('isLoading prop:', isLoading);
+    console.log('onSearch prop available:', !!onSearch);
+  }, []);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    console.log('Search form submitted with city:', city);
     if (city.trim()) {
+      console.log('Calling onSearch with city:', city);
       onSearch(city);
+    } else {
+      console.log('Empty city, search not performed');
     }
   };
 
@@ -29,7 +40,10 @@ const SearchBar = ({ onSearch, isLoading }: SearchBarProps) => {
           type="text"
           placeholder="Search for a city..."
           value={city}
-          onChange={(e) => setCity(e.target.value)}
+          onChange={(e) => {
+            console.log('Input changed:', e.target.value);
+            setCity(e.target.value);
+          }}
           className="w-full py-3 px-4 pr-12 rounded-lg bg-white/10 backdrop-blur-md text-gray-800 dark:text-white border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
         <button
