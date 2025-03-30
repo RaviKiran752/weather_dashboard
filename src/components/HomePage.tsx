@@ -5,7 +5,7 @@ import SearchHistory from './SearchHistory';
 import { useWeather } from '../hooks/useWeather';
 
 const HomePage = () => {
-  const { getWeather, isLoading, searchHistory } = useWeather();
+  const { getWeather, isLoading, searchHistory, weatherData } = useWeather();
   
   // Add debug logging
   useEffect(() => {
@@ -13,6 +13,7 @@ const HomePage = () => {
     console.log('getWeather function available:', !!getWeather);
     console.log('isLoading state:', isLoading);
     console.log('searchHistory available:', !!searchHistory);
+    console.log('weatherData available:', !!weatherData);
   }, []);
 
   const fadeIn = {

@@ -6,6 +6,7 @@ import ForecastPage from './components/ForecastPage';
 import DataAnalysisPage from './components/DataAnalysisPage';
 import AboutPage from './components/AboutPage';
 import { AppContext, AppProvider } from './context/AppContext';
+import { WeatherProvider } from './context/WeatherContext';
 
 function AppContent() {
   const { currentPage, setCurrentPage } = useContext(AppContext);
@@ -28,7 +29,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <Layout currentPage={currentPage} setCurrentPage={setCurrentPage}>
+      <Layout>
         <AnimatePresence mode="wait">
           {renderPage()}
         </AnimatePresence>
@@ -40,7 +41,9 @@ function AppContent() {
 function App() {
   return (
     <AppProvider>
-      <AppContent />
+      <WeatherProvider>
+        <AppContent />
+      </WeatherProvider>
     </AppProvider>
   );
 }

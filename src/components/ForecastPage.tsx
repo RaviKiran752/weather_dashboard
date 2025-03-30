@@ -32,6 +32,20 @@ const ForecastPage = () => {
     getWeather(city);
   };
 
+  // Additional debug logging
+  useEffect(() => {
+    console.log('ForecastPage mounted - Context states:', {
+      hasWeatherData: !!weatherData,
+      hasForecastData,
+      isLoading,
+      hasError: !!error
+    });
+    
+    if (weatherData) {
+      console.log('ForecastPage - Current weather data for:', weatherData.location?.name);
+    }
+  }, [weatherData, hasForecastData, isLoading, error]);
+
   return (
     <div className="max-w-6xl mx-auto">
       <motion.div 
@@ -109,7 +123,7 @@ const ForecastPage = () => {
               </div>
             </div>
 
-            {forecastView === 'daily' ? (
+            {forecastView === 'daily' && forecastData?.forecast?.forecastday && (
               <div>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                   {forecastData.forecast.forecastday.map((day) => {
@@ -190,7 +204,9 @@ const ForecastPage = () => {
                   })}
                 </div>
               </div>
-            ) : (
+            )}
+            
+            {forecastView === 'hourly' && forecastData?.forecast?.forecastday && (
               <div className="space-y-6">
                 {forecastData.forecast.forecastday.slice(0, 1).map((day) => (
                   <div key={`hourly-${day.date}`}>
