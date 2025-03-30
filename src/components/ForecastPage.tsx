@@ -125,7 +125,7 @@ const ForecastPage = () => {
 
             {forecastView === 'daily' && forecastData?.forecast?.forecastday && (
               <div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-6">
                   {forecastData.forecast.forecastday.map((day) => {
                     const date = new Date(day.date);
                     const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
@@ -134,23 +134,23 @@ const ForecastPage = () => {
                     return (
                       <div 
                         key={day.date} 
-                        className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+                        className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 md:p-4 shadow-sm hover:shadow-md transition-shadow"
                       >
                         <div className="text-center">
-                          <h3 className="font-bold text-gray-800 dark:text-white">{dayName}</h3>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{formattedDate}</p>
+                          <h3 className="font-bold text-gray-800 dark:text-white text-sm sm:text-base">{dayName}</h3>
+                          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 md:mb-3">{formattedDate}</p>
                           
                           <img 
                             src={day.day.condition.icon} 
                             alt={day.day.condition.text}
-                            className="w-16 h-16 mx-auto"
+                            className="w-12 h-12 md:w-16 md:h-16 mx-auto"
                           />
                           
-                          <p className="font-bold text-2xl text-gray-800 dark:text-white mt-2">
+                          <p className="font-bold text-xl md:text-2xl text-gray-800 dark:text-white mt-1 md:mt-2">
                             {Math.round(day.day.avgtemp_c)}°C
                           </p>
                           
-                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">
                             {day.day.condition.text}
                           </p>
                         </div>
@@ -159,7 +159,7 @@ const ForecastPage = () => {
                   })}
                 </div>
 
-                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                   {forecastData.forecast.forecastday.map((day, index) => {
                     const date = new Date(day.date);
                     const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
@@ -170,10 +170,10 @@ const ForecastPage = () => {
                     return (
                       <div 
                         key={`${day.date}-details`} 
-                        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-100 dark:border-gray-700"
+                        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3 sm:p-4 border border-gray-100 dark:border-gray-700"
                       >
-                        <h4 className="font-semibold text-gray-800 dark:text-white mb-3">{dayName} Details</h4>
-                        <ul className="space-y-2">
+                        <h4 className="font-semibold text-gray-800 dark:text-white text-sm sm:text-base mb-2 sm:mb-3">{dayName} Details</h4>
+                        <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                           <li className="flex justify-between">
                             <span className="text-gray-600 dark:text-gray-400">Humidity</span>
                             <span className="font-medium text-gray-800 dark:text-white">
@@ -214,40 +214,52 @@ const ForecastPage = () => {
                       Hourly Forecast ({new Date(day.date).toLocaleDateString('en-US', { weekday: 'long' })})
                     </h3>
                     
-                    <div className="overflow-x-auto pb-2">
-                      <div className="inline-flex space-x-4 min-w-full">
-                        {day.hour.map((hour, index) => {
-                          if (index % 2 !== 0) return null; // Only display every 2 hours for simplicity
-                          
-                          const hourTime = new Date(hour.time);
-                          const formattedHour = hourTime.toLocaleTimeString('en-US', { 
-                            hour: 'numeric', 
-                            hour12: true 
-                          });
-                          
-                          return (
-                            <div 
-                              key={hour.time} 
-                              className="flex flex-col items-center bg-gray-50 dark:bg-gray-700 rounded-lg p-3 min-w-[90px]"
-                            >
-                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {formattedHour}
-                              </span>
-                              <img 
-                                src={hour.condition.icon} 
-                                alt={hour.condition.text}
-                                className="w-10 h-10 my-2"
-                              />
-                              <span className="text-base font-bold text-gray-800 dark:text-white">
-                                {Math.round(hour.temp_c)}°C
-                              </span>
-                              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex flex-col items-center">
-                                <span>{hour.wind_kph} km/h</span>
-                                <span className="mt-1">{hour.chance_of_rain}% rain</span>
+                    <div className="relative">
+                      <div className="md:hidden text-xs text-gray-500 dark:text-gray-400 mb-2 flex items-center justify-center">
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span>Swipe to see more</span>
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
+                      
+                      <div className="overflow-x-auto pb-4 -mx-2 px-2 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                        <div className="flex flex-nowrap space-x-3 min-w-max">
+                          {day.hour.map((hour, index) => {
+                            if (index % 2 !== 0) return null; // Only display every 2 hours for simplicity
+                            
+                            const hourTime = new Date(hour.time);
+                            const formattedHour = hourTime.toLocaleTimeString('en-US', { 
+                              hour: 'numeric', 
+                              hour12: true 
+                            });
+                            
+                            return (
+                              <div 
+                                key={hour.time} 
+                                className="flex flex-col items-center bg-gray-50 dark:bg-gray-700 rounded-lg p-3 w-[80px] flex-shrink-0 sm:w-[90px] md:w-[100px]"
+                              >
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                  {formattedHour}
+                                </span>
+                                <img 
+                                  src={hour.condition.icon} 
+                                  alt={hour.condition.text}
+                                  className="w-10 h-10 my-2"
+                                />
+                                <span className="text-base font-bold text-gray-800 dark:text-white">
+                                  {Math.round(hour.temp_c)}°C
+                                </span>
+                                <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex flex-col items-center">
+                                  <span>{hour.wind_kph} km/h</span>
+                                  <span className="mt-1">{hour.chance_of_rain}% rain</span>
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
